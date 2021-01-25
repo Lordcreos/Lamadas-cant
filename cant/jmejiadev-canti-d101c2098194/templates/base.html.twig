@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{% block title %}Canti{% endblock %}</title>
+        {% block stylesheets %}
+
+            {#Bootstrap 4#}
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+
+<!--            <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>-->
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+            {# TEMPUS BOOTSTRAP#}
+            <script type="text/javascript" src="{{ asset('js/moment.js') }}"></script>
+            <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/js/tempusdominus-bootstrap-4.min.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/css/tempusdominus-bootstrap-4.min.css" />
+
+            {# DATEPICKER #}
+            <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker.min.css" rel="stylesheet"/>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js"></script>
+
+            {# jqxWidgets#}
+            <link rel="stylesheet" href="{{ asset('jqx/jqwidgets/styles/jqx.base.css') }}" type="text/css" />
+            <script type="text/javascript" src="{{ asset('jqx/jqwidgets/jqxcore.js')}}"></script>
+            <script type="text/javascript" src="{{ asset('jqx/jqwidgets/jqxdata.js')}}"></script>
+            <script type="text/javascript" src="{{ asset('jqx/jqwidgets/jqxbuttons.js')}}"></script>
+            <script type="text/javascript" src="{{ asset('jqx/jqwidgets/jqxscrollbar.js')}}"></script>
+            <script type="text/javascript" src="{{ asset('jqx/jqwidgets/jqxmenu.js')}}"></script>
+            <script type="text/javascript" src="{{ asset('jqx/jqwidgets/jqxcheckbox.js')}}"></script>
+            <script type="text/javascript" src="{{ asset('jqx/jqwidgets/jqxlistbox.js')}}"></script>
+            <script type="text/javascript" src="{{ asset('jqx/jqwidgets/jqxdropdownlist.js')}}"></script>
+            <script type="text/javascript" src="{{ asset('jqx/jqwidgets/jqxgrid.js')}}"></script>
+            <script type="text/javascript" src="{{ asset('jqx/jqwidgets/jqxgrid.sort.js')}}"></script>
+            <script type="text/javascript" src="{{ asset('jqx/jqwidgets/jqxgrid.pager.js')}}"></script>
+            <script type="text/javascript" src="{{ asset('jqx/jqwidgets/jqxgrid.filter.js')}}"></script>
+            <script type="text/javascript" src="{{ asset('jqx/jqwidgets/jqxgrid.selection.js')}}"></script>
+            <script type="text/javascript" src="{{ asset('jqx/jqwidgets/jqxgrid.edit.js')}}"></script>
+            <script type="text/javascript" src="{{ asset('jqx/jqwidgets/jqxdata.export.js')}}"></script>
+            <script type="text/javascript" src="{{ asset('jqx/jqwidgets/jqxgrid.export.js')}}"></script>
+            <script type="text/javascript" src="{{ asset('jqx/jqwidgets/jqxinput.js')}}"></script>
+            <script type="text/javascript" src="{{ asset('jqx/jqwidgets/jqxcalendar.js')}}"></script>
+            <script type="text/javascript" src="{{ asset('jqx/jqwidgets/jqxdatetimeinput.js')}}"></script>
+            <script type="text/javascript" src="{{ asset('jqx/jqwidgets/jqxgrid.columnsresize.js')}}"></script>
+            {#<script type="text/javascript" src="{{ asset('jqx/jqwidgets/globalization/globalize.js')}}"></script>#}
+            <script type="text/javascript" src="{{ asset('jqx/scripts/localization.js')}}"></script>
+
+            {# Global #}
+            <link type="text/css" href="{{asset('css/main.css')}}" rel="stylesheet">
+            {#<link rel="stylesheet" type="text/css" href="{{ asset('js/menu/pushbar.css')}}">#}
+
+            {# Menu #}
+            <link rel="stylesheet" type="text/css" href="{{asset('css/menu/jquery-accordion-menu.css')}}" />
+            <script type="text/javascript" src="{{ asset('js/menu/jquery-accordion-menu.js')}}"></script>
+            {# fontawesome#}
+            <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+            <!-- bootstrap selectpicker -->
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
+
+        {% endblock %}
+        {% block styles %}
+        {% endblock %}
+    </head>
+    <body>
+        {% block header %}
+            <div id="navegador" class="contarner-fluid w-100 ">
+                <div class="row bg-dark justify-content-end align-items-center w-100 m-0">
+                    {% if app.user %}
+                        <div class="text-left text-white col-1 mt-1 mb-1">
+                            <button class="navbar-toggler bg-dark " type="button" data-toggle="collapse" data-target=".collapse" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+                                <i class="fas fa-bars text-white"></i>
+                            </button>
+                        </div>
+                        <div class="text-white col-xl-3 col-lg-4 col-md-5 col-sm-6 col-11 mt-1 mb-1">
+                            <i class="far fa-user mr-2 ml-3" style="color: #57b846"></i>    {{ app.user }}      <a href="{{ path('fos_user_security_logout') }}"  ><i class="fas fa-sign-out-alt btn-md ml-4 mr-2"></i><span class="text-white">{% trans %}Salir{% endtrans %}</span></a>
+                        </div>
+                        <div class="text-white col-xl-4 col-lg-3 col-md-2 d-xl-block d-xl-block d-lg-block d-md-block d-sm-none d-none">
+
+                        </div>
+                    {% endif %}
+                    <div class="text-right text-white col-xl-2 col-lg-2 col-md-2 col-sm-2 col-5 mt-1 mb-1">
+                        <i class="fas fa-globe-americas" style="color:#5eb5e0"></i>   {% trans %}Idioma{% endtrans %}
+                    </div>
+                    <div class="col-xl-2 col-lg-2 col-md-2 col-sm-3 col-7 mt-1 mb-1">
+                        <form id="forIdiomas" class="" action="{{ path('default_cambia_idioma') }}" method="post">
+                            <input name="route" value="{{ app.request.attributes.get('_route') }}" style="display:none">
+                            <select id="idiomas" class="custom-select custom-select-sm" name="lang" style="width:90%">
+                                <option value="es">{% trans %}Español{% endtrans %}</option>
+                                <!--<option value="en">{% trans %}Inglés{% endtrans %}</option>-->
+                            </select>
+                        </form>
+                    </div>
+                </div>
+                <div class="row h-100 w-100 m-0">
+                    <div id="navbarToggleExternalContent" class="pr-1 collapse jquery-accordion-menu bg-dark col-xl-2 col-lg-2 col-md-3 col-sm-3 col-12">
+                        {% if app.user %}
+                            {% include 'menu.html.twig' %}
+                        {% endif %}
+                    </div>
+                    <div id="divContenido" class="text-center h-100 col-xl-10 col-lg-10 col-md-9 col-sm-9 col-12">
+                        {% block contenido %}{% endblock %}
+                    </div>
+                </div>
+            </div>
+        {% endblock %}
+        <!--<script type="text/javascript" src="{{ asset('js/menu/pushbar.js')}}"></script>-->
+        <script>
+            {% block javascripts %}
+                $(document).ready(function() {
+                    $("#navbarToggleExternalContent").jqueryAccordionMenu();
+                    $("#navbarToggleExternalContent").collapse();
+
+                    //var pushbar = new Pushbar({
+                    //    blur: true,
+                    //    overlay: true
+                    //});
+                    $('#menu').css({'margin-top': $(".contarner-fluid.bg-dark").height()});
+                    $("#idiomas option[value={{ app.request.locale }}]").attr('selected', 'selected');
+                    $("#idiomas").change(function () {
+                        $("#forIdiomas").submit();
+                    });
+
+                    $('#navbarToggleExternalContent').on('hidden.bs.collapse', function () {
+                        $("#divContenido").removeClass();
+                        $("#divContenido").addClass("text-center h-100 col-12");
+                    })
+                    $('#navbarToggleExternalContent').on('show.bs.collapse', function () {
+                        $("#divContenido").removeClass();
+                        $("#divContenido").addClass("text-center h-100 col-xl-10 col-lg-10 col-md-9 col-sm-9 col-12");
+                    })
+                });
+            {% endblock %}
+        </script>
+    </body>
+</html>

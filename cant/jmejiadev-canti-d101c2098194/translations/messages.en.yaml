@@ -1,0 +1,53 @@
+# translations/messages.en.yaml
+Hola: Hello
+Bienvenido: Welcome
+Administrador: Admin
+Volver: Back
+Español: Spanish
+Inglés: English
+Salir: LogOut
+Idioma: Language
+usuario: user
+Usuario: User
+USUARIO: USER
+Usuario (min:6 - max:15): User (min:6 - max:15)
+contraseña: password
+Contraseña (min:6 - max:15): Password (min:6 - max:15)
+Confirmar Contraseña: Confirm Password
+ENTRAR: JOIN
+Usuario o Contraseña, incorrectos!: Bad Credentiales!
+Olvidaste: Forgot
+Usuario / Contraseña?: User / Password
+Cerrar Sesión: Logout
+Usuarios: Users
+Crear Usuario: Add User
+Modificar Usuarios: Edit Users
+Modificar Usuario: Edit User
+Correo Electrónico: E-Mail
+Correo: E-Mail
+CORREO: E-MAIL
+Nombres Completos: Full Names
+Nombre: Name
+Apellidos: Surnames
+Perfil: Profile
+Perfiles: Profiles
+Listado de Usuarios: List of Users
+buscar . . .: search . . .
+Estado: Status
+ESTADO: STATUS
+Opciones: Options
+Activo: Enabled
+Inactivo: Disabled
+Modificar: Edit
+válido: valid
+inválido!: invalid!
+Seleccionar...: Select...
+SUPER_ADMINISTRADOR: SUPER_ADMINISTRATOR
+ADMINISTRADOR: ADMINISTRATOR
+Usuario Inactivo: Disabled User
+Usuario Activo: Enabled User
+Nombre de usuario ya registrado!: User name already registered
+Correo de usuario ya registrado!: E-Mail already registered
+Usuario se encuentra inactivo!: Disabled User
+Información del Usuario: User information
+Ultimo Ingreso: Last Login

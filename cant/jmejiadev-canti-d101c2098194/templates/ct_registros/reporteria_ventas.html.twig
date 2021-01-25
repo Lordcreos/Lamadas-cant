@@ -1,0 +1,108 @@
+{% extends 'base.html.twig' %}
+
+{% block contenido %}
+    <div class="container-fluid w-100 mt-5">
+        <div class="row">
+            <div class="col-12">
+                <h2>{% trans %}Vizualización de ventas{% endtrans %}</h2><hr>
+            </div>
+        </div>
+        <div class="row">
+            <div id="grid"></div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-12">
+                <button type="button" class="btn btn-lg btn-success" id="excelExport"><i class="far fa-file-excel"></i> Exportar a Excel</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        var registros = {{ ct_registros|json_encode|raw }};
+
+        $(document).ready(function(){
+            $("#excelExport").click(function () {
+                $("#grid").jqxGrid('exportdata', 'xls', 'jqxGrid');
+            });
+            var source =
+                {
+                    localdata: registros,
+                    datatype: "array",
+                    datafields:
+                        [
+                            { name: 'id', type: 'int' },
+                            { name: 'username', type: 'string' },
+                            { name: 'camNombre', type: 'string' },
+                            { name: 'regDocumento', type: 'string' },
+                            { name: 'regTelefono', type: 'string' },
+                            { name: 'regNombre', type: 'string' },
+                            { name: 'regProducto', type: 'string' },
+                            { name: 'tipLlaNombre', type: 'string' },
+                            { name: 'regEstado', type: 'string' },
+                            { name: 'regFecRegistro', map:'regFecRegistro>date', type: 'date' },
+                            { name: 'regFecGestion', map:'regFecGestion>date', type: 'date' },
+                            { name: 'regTipGestion', type: 'string' },
+                            { name: 'useraxis', type: 'string' }
+
+                        ]
+                };
+            var dataAdapter = new $.jqx.dataAdapter(source);
+
+            $("#grid").jqxGrid(
+                {
+                    width: '100%',
+                    source: dataAdapter,
+                    columnsresize: true,
+                    rowsheight: 40,
+                    showfilterrow: true,
+                    filterable: true,
+                    altrows: true,
+                    columns: [
+                        { text: 'ID', datafield: 'id', width: 35 },
+                        { text: 'Usuario Ntg', filtertype: 'checkedlist', datafield: 'username', width: 98 },
+                        { text: 'Campaña', filtertype: 'checkedlist', datafield: 'camNombre', width: 120 },
+                        { text: 'Documento', datafield: 'regDocumento', width: 120 },
+                        { text: 'Teléfono', datafield: 'regTelefono', width: 100 },
+                        { text: 'Nombre', datafield: 'regNombre', width: 150 },
+                        { text: 'Producto', filtertype: 'checkedlist', datafield: 'regProducto', width: 150 },
+                        { text: 'Tipo Llamada', filtertype: 'checkedlist', datafield: 'tipLlaNombre', width: 90 },
+                        { text: 'Estado', filtertype: 'checkedlist', datafield: 'regEstado', width: 80 },
+                        { text: 'Fecha Registro', filtertype: 'range', datafield: 'regFecRegistro', width: 75, cellsformat:'yyyy-MM-dd' },
+                        { text: 'Fecha Gestion', filtertype: 'range', datafield: 'regFecGestion', width: 75, cellsformat:'yyyy-MM-dd' },
+                        { text: 'Usuario Axis', filtertype: 'checkedlist', datafield: 'useraxis', width: 75 },
+                        { text: 'Gestión', datafield: 'regTipGestion', width: 100 },
+
+                    ]
+                });
+
+            $("#distribuir").click(function(){
+                var rows = [];
+                rows = $("#grid").jqxGrid('getselectedrowindexes');
+                if(rows.length == 0){
+                    alert("Debe seleccionar registros");
+                    return false;
+                }
+                var registros = [];
+                for(var i=0; i< rows.length; i++){
+                    var selectedRowData = $('#grid').jqxGrid('getrowdata', rows[i]);
+                    registros.push(selectedRowData.id);
+                }
+
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ path('ct_registros_distribuir') }}',
+                    data: {'registros':registros},
+                    cache: false,
+                    success: function (data) {
+                        alert('Distribución Realizada con exito - '+ data);
+                        location.reload();
+                    },
+                    error: function (data) {
+                        alert('Error, Distribución no realizada: - '+ data.responseText);
+                    },
+                });
+            });
+
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,169 @@
+{% extends 'base.html.twig' %}
+
+{% block contenido %}
+    <div class="container w-100 mt-5">
+        <div class="row">
+            <div class="col-12">
+                <h2>{% trans %}Listado de Usuarios{% endtrans %}</h2><hr>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-4 text-left">
+                <div class="input-group input-group-sm m-2">
+                    <input id="buscar" type="text" class="form-control rounded" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" placeholder="{% trans %}buscar . . .{% endtrans %}">
+                </div>
+            </div>
+            <div class="col-8 smallText text-right">
+                <a href="{{ path('user_new') }}">
+                    <button type="button" class="btn btn-info">
+                        <i class="fas fa-user-plus"></i>
+                    </button>
+                </a>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table id="lista" class="table border">
+                <thead>
+                    <tr class="bg-success text-white font-weight-bold">
+                        <th><h6>Id</h6></th>
+                        <th><h6>{% trans %}Usuario{% endtrans %}</h6></th>
+                        <th><h6>{% trans %}Nombre{% endtrans %}</h6></th>
+                        <th><h6>{% trans %}Correo{% endtrans %}</h6></th>
+                        <th><h6>{% trans %}Perfil{% endtrans %}</h6></th>
+                        <th><h6>{% trans %}Estado{% endtrans %}</h6></th>
+                        <th><h6>{% trans %}Opciones{% endtrans %}</h6></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for index,user in users %}
+                    <tr class="fila w-100">
+                        <td class="">{{ user.id }}</td>
+                        <td class=""><h6>{{ user.username }}</h6></td>
+                        <td class=""><h6>{{ user.usuApellidos }} {{ user.usuNombres }}</h6></td>
+                        <td class=""><h6>{{ user.email }}</h6></td>
+                        <td class="text-left"><h6>{% for roles in user.roles %}<i class="far fa-address-card"></i>  {{ roles }}<br>{% endfor %}</h6></td>
+                        <td class="">{% if user.enabled == 1 %} <h6>{% trans %}Activo{% endtrans %}</h6> {% else %} <h6>{% trans %}Inactivo{% endtrans %}</h6> {% endif %}</td>
+                        <td class=""><a href="{{ path('user_edit',{'id':user.id}) }}"><button type="button" class="btn btn-primary btn-sm"><i class="fas fa-user-edit"></i></button></a>
+                            <a href="javascript:void(0);" onClick="userShow('{{ index }}')"><button type="button" class="btn btn-warning btn-sm"><i class="far fa-eye"></i></button></a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="row align-items-center justify-content-center mt-2">
+        <div class="col-12 smallText text-center">
+            <a href="{{ path('user_new') }}">
+                <button type="button" class="btn btn-info">
+                    <i class="fas fa-user-plus mr-3"></i> {% trans %}Crear Usuario{% endtrans %}
+                </button>
+            </a>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="userShow" tabindex="-1" role="dialog" aria-labelledby="userShowLabel" aria-hidden="true" >
+        <div class="modal-dialog" role="document">
+            <div class="modal-content" style="width: 700px">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="userShowLabel">{% trans %}Información del Usuario{% endtrans %}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div id="modUserShow" class="modal-body">
+
+                </div>
+                {#<div class="modal-footer">#}
+                    {#<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>#}
+                    {#<button type="button" class="btn btn-primary">Save changes</button>#}
+                {#</div>#}
+            </div>
+        </div>
+    </div>
+    <script>
+        var users = {{ users|json_encode|raw}}
+        // MUESTRA INFORMACION COMPLETA DEL USUARIO
+        function userShow(index){
+            $("#modUserShow").empty();
+            $("#modUserShow").append('' +
+                '<div class="card mb-3 border" style="max-width: 740px;">'+
+                '   <div class="row no-gutters">'+
+                '       <div class="col-md-4 border">'+
+                '           <img src="{{ asset('img/user_info.png') }}" class="card-img m-2" alt="...">'+
+                '       </div>'+
+                '       <div class="col-md-8">'+
+                '           <div class="card-body">'+
+                '               <h5 class="card-title">'+ users[index].usuApellidos+' '+ users[index].usuNombres +'</h5>'+
+                '               <div class="row">'+
+                '                  <div class="col-4 text-right">'+
+                '                      ID:'+
+                '                  </div>'+
+                '                  <div class="col-8 text-left">'+
+                                        users[index].id +
+                '                  </div>'+
+                '               </div>'+
+                '               <div class="row">'+
+                '                  <div class="col-4 text-right">'+
+                '                      {% trans %}USUARIO{% endtrans %}:'+
+                '                  </div>'+
+                '                  <div class="col-8 text-left">'+
+                                        users[index].username +
+                '                  </div>'+
+                '               </div>'+
+                '               <div class="row">'+
+                '                  <div class="col-4 text-right">'+
+                '                      {% trans %}CORREO{% endtrans %}:'+
+                '                  </div>'+
+                '                  <div class="col-8 text-left">'+
+                                        users[index].email +
+                '                  </div>'+
+                '               </div>'+
+                '               <div class="row">'+
+                '                  <div class="col-4 text-right">'+
+                '                      {% trans %}ESTADO{% endtrans %}:'+
+                '                  </div>'+
+                '                  <div class="col-8 text-left">'+
+                                        users[index].enabled.toString().replace("true","{% trans %}Activo{% endtrans %}").replace("false","{% trans %}Inactivo{% endtrans %}") +
+                '                  </div>'+
+                '               </div>'+
+                '               <div class="row">'+
+                '                  <div class="col-4 text-right">'+
+                '                      {% trans %}Ultimo Ingreso{% endtrans %}:'+
+                '                  </div>'+
+                '                  <div class="col-8 text-left">'+
+                                        users[index].lastLogin.date.substring(0,19) +
+                '                  </div>'+
+                '               </div>'+
+                '               <div class="row">'+
+                '                  <div class="col-4 text-right">'+
+                '                      {% trans %}Perfil{% endtrans %}:'+
+                '                  </div>'+
+                '                  <div class="col-8 text-left">'+
+                                        users[index].roles[0] +
+                '                  </div>'+
+                '               </div>'+
+                '               <div class="row mt-3">'+
+                '                  <div class="col-12 text-right">'+
+                '                      <a href="'+users[index].id+'/edit"><button type="button" class="btn btn-primary btn-sm"><i class="fas fa-user-edit mr-3"></i>{% trans %}Modificar{% endtrans %}</button></a>' +
+                '                  </div>'+
+                '               </div>'+
+                '           </div>'+
+                '       </div>'+
+                '   </div>'+
+                '</div>');
+            $("#userShow").modal();
+
+            console.log(users[index]);
+        }
+        $(document).ready(function(){
+            $("#buscar").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("#lista .fila").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+
+        });
+    </script>
+{% endblock %}

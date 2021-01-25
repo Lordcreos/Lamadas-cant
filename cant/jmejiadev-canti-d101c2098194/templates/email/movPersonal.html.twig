@@ -1,0 +1,68 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+</head>
+<body>
+    {% block contenido %}
+        <div class="container w-100 mt-5">
+            <div class="row">
+                <div class="col-12">
+                    <h2>{% trans %}Movimiento de personal{% endtrans %}</h2><hr>
+                </div>
+            </div>
+            <div class="row">
+                <br>
+                <br>
+                Fecha: {{ fecha }}
+                <br>
+                    <div class="table-responsive table-bordered border">
+                        <table style="border-collapse: collapse" id="lista" class="table border">
+                            <thead>
+                            {% if movimientos %}
+                                <tr class="bg-success text-white font-weight-bold">
+                                    <th style="border: 1px solid black"><h6>{% trans %}Supervisor{% endtrans %}</h6></th>
+                                    <th style="border: 1px solid black"><h6>{% trans %}Bio Id{% endtrans %}</h6></th>
+                                    <th style="border: 1px solid black"><h6>{% trans %}Personal{% endtrans %}</h6></th>
+                                    <th style="border: 1px solid black"><h6>{% trans %}Lunes{% endtrans %}</h6></th>
+                                    <th style="border: 1px solid black"><h6>{% trans %}Martes{% endtrans %}</h6></th>
+                                    <th style="border: 1px solid black"><h6>{% trans %}Miercoles{% endtrans %}</h6></th>
+                                    <th style="border: 1px solid black"><h6>{% trans %}Jueves{% endtrans %}</h6></th>
+                                    <th style="border: 1px solid black"><h6>{% trans %}Viernes{% endtrans %}</h6></th>
+                                    <th style="border: 1px solid black"><h6>{% trans %}Sabado{% endtrans %}</h6></th>
+                                    <th style="border: 1px solid black"><h6>{% trans %}Domingo{% endtrans %}</h6></th>
+                                    <th style="border: 1px solid black"><h6>{% trans %}SubCampaña{% endtrans %}</h6></th>
+                                </tr>
+                            {% endif %}
+                            </thead>
+                            <tbody>
+                                {% if movimientos %}
+                                    {% for mov in movimientos %}
+                                        <tr class="fila w-100">
+                                            <td align="center" style="border: 1px solid black" class="border">{{ mov.usuario }}</td>
+                                            <td align="center" style="border: 1px solid black" class="border"><h6>{{ mov.bioId }}</h6></td>
+                                            <td align="center" style="border: 1px solid black" class="border"><h6>{{ mov.nombre }}</h6></td>
+                                            <td align="center" style="border: 1px solid black" class="border"><h6>{%  if mov.lunes %} {{ mov.lunes }} {% else %}  <font color="green">S/C</font> {%  endif %}</h6></td>
+                                            <td align="center" style="border: 1px solid black" class="border"><h6>{%  if mov.martes %} {{ mov.martes }} {%  else %} <font color="green">S/C</font> {%  endif %}</h6></td>
+                                            <td align="center" style="border: 1px solid black" class="border"><h6>{%  if mov.miercoles %} {{ mov.miercoles }} {% else %} <font color="green">S/C</font> {%  endif %}</h6></td>
+                                            <td align="center" style="border: 1px solid black" class="border"><h6>{%  if mov.jueves %} {{ mov.jueves }} {%  else %} <font color="green">S/C</font> {%  endif %}</h6></td>
+                                            <td align="center" style="border: 1px solid black" class="border"><h6>{%  if mov.viernes %} {{ mov.viernes }} {%  else %} <font color="green">S/C</font> {%  endif %}</h6></td>
+                                            <td align="center" style="border: 1px solid black" class="border"><h6>{%  if mov.sabado %} {{ mov.sabado }} {%  else %} <font color="green">S/C</font> {%  endif %}</h6></td>
+                                            <td align="center" style="border: 1px solid black" class="border"><h6>{%  if mov.domingo %} {{ mov.domingo }} {%  else %} <font color="green">S/C</font> {%  endif %}</h6></td>
+                                            <td align="center" style="border: 1px solid black" class="border"><h6>{%  if mov.subCampana %} {{ mov.subCampana }} {%  else %} <font color="green">S/C</font> {%  endif %}</h6></td>
+                                        </tr>
+                                    {% endfor %}
+                                {% else %}
+                                <tr class="fila w-100">
+                                    <td colspan="11" align="center" style="border: 1px solid black" class="border"><h2>No existen movimientos de personal en este periodo</h2></td>
+                                </tr>
+                                {% endif %}
+                            </tbody>
+                        </table>
+                    </div>
+            </div>
+
+    {% endblock %}
+</body>
+</html>

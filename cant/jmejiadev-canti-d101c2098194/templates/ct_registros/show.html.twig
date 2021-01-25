@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}CtRegistros{% endblock %}
+
+{% block body %}
+    <h1>CtRegistros</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ ct_registro.id }}</td>
+            </tr>
+            <tr>
+                <th>RegDocumento</th>
+                <td>{{ ct_registro.regDocumento }}</td>
+            </tr>
+            <tr>
+                <th>RegTelefono</th>
+                <td>{{ ct_registro.regTelefono }}</td>
+            </tr>
+            <tr>
+                <th>RegNombre</th>
+                <td>{{ ct_registro.regNombre }}</td>
+            </tr>
+            <tr>
+                <th>RegProducto</th>
+                <td>{{ ct_registro.regProducto }}</td>
+            </tr>
+            <tr>
+                <th>RegTipGestion</th>
+                <td>{{ ct_registro.regTipGestion }}</td>
+            </tr>
+            <tr>
+                <th>RegFecRegistro</th>
+                <td>{{ ct_registro.regFecRegistro ? ct_registro.regFecRegistro|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>RegFecGestion</th>
+                <td>{{ ct_registro.regFecGestion ? ct_registro.regFecGestion|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>RegEstado</th>
+                <td>{{ ct_registro.regEstado ? 'Yes' : 'No' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('ct_registros_index') }}">back to list</a>
+
+    <a href="{{ path('ct_registros_edit', {'id': ct_registro.id}) }}">edit</a>
+
+    {{ include('ct_registros/_delete_form.html.twig') }}
+{% endblock %}

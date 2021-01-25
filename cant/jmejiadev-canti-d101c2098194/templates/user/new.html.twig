@@ -1,0 +1,223 @@
+{% extends 'base.html.twig' %}
+
+{% block contenido %}
+
+    <div class="container w-100 mt-5">
+        <div class="row">
+            <div class="col-12">
+                <h2>{% trans %}Crear Usuario{% endtrans %}</h2><hr>
+            </div>
+        </div>
+        {{ form_start(form, {'attr': {'id': 'forNew','class':"needs-validation",'novalidate':''}}) }}
+        <div class="form-row align-items-center justify-content-center">
+            <div class="text-left col-lg-4 col-md-6 col-sm-6 col-12 mb-3">
+                <label for="username">{% trans %}Usuario (min:6 - max:15){% endtrans %}</label>
+                {{ form_widget(form.username,{'id':'username','autocomplete':'off','attr':{'class':'form-control form-control-sm'}}) }}
+                <div class="valid-feedback">
+                    {% trans %}válido{% endtrans %}
+                </div>
+                <div id="lusername" class="invalid-feedback">
+                    {% trans %}inválido!{% endtrans %}
+                </div>
+            </div>
+            <div class="text-left col-lg-4 col-md-6 col-sm-6 col-12 mb-3">
+                <label for="username">{% trans %}Correo Electrónico{% endtrans %}</label>
+                {{ form_widget(form.email,{'id':'email','attr':{'class':'form-control form-control-sm'}}) }}
+                <div class="valid-feedback">
+                    {% trans %}válido{% endtrans %}
+                </div>
+                <div id="lemail" class="invalid-feedback">
+                    {% trans %}inválido!{% endtrans %}
+                </div>
+            </div>
+
+        </div>
+        <div class="form-row align-items-center justify-content-center">
+            <div class="text-left col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12 mb-3">
+                <label for="username">{% trans %}Nombres Completos{% endtrans %}</label>
+                {{ form_widget(form.usuNombres,{'id':'usuNombres','attr':{'class':'form-control form-control-sm'}}) }}
+                <div class="valid-feedback">
+                    {% trans %}válido{% endtrans %}
+                </div>
+                <div class="invalid-feedback">
+                    {% trans %}inválido!{% endtrans %}
+                </div>
+            </div>
+            <div class="text-left col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12 mb-3">
+                <label for="username">{% trans %}Apellidos{% endtrans %}</label>
+                {{ form_widget(form.usuApellidos,{'id':'usuApellidos','attr':{'class':'form-control form-control-sm'}}) }}
+                <div class="valid-feedback">
+                    {% trans %}válido{% endtrans %}
+                </div>
+                <div class="invalid-feedback">
+                    {% trans %}inválido!{% endtrans %}
+                </div>
+            </div>
+        </div>
+        <div class="form-row align-items-start justify-content-center">
+            <div class="text-left col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12 mb-3">
+                <label for="username">{% trans %}Perfiles{% endtrans %}</label>
+                <div class="form-control custom-control">
+                    <div class="custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input" id="ADMINISTRADOR" name="perfil[]" value="ADMINISTRADOR">
+                        <label id="lADMINISTRADOR" class="custom-control-label" for="ADMINISTRADOR">ADMINISTRADOR</label>
+                    </div>
+                </div>
+                <div class="form-control custom-control">
+                    <div class="custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input" id="SUPERVISOR" name="perfil[]" value="SUPERVISOR">
+                        <label id="lSUPERVISOR" class="custom-control-label" for="SUPERVISOR">SUPERVISOR</label>
+                    </div>
+                </div>
+                <div class="form-control custom-control">
+                    <div class="custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input" id="AGENTE" name="perfil[]" value="AGENTE">
+                        <label id="lAGENTE" class="custom-control-label" for="AGENTE">AGENTE</label>
+                    </div>
+                </div>
+                <div class="form-control custom-control">
+                    <div class="custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input" id="VENTAS" name="perfil[]" value="VENTAS">
+                        <label id="lVENTAS" class="custom-control-label" for="VENTAS">VENTAS</label>
+                    </div>
+                </div>
+                <div class="form-control custom-control">
+                    <div class="custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input" id="REPORTERIA" name="perfil[]" value="REPORTERIA">
+                        <label id="lREPORTERIA" class="custom-control-label" for="REPORTERIA">REPORTERIA</label>
+                    </div>
+                </div>
+                <div class="valid-feedback">
+                    {% trans %}válido{% endtrans %}
+                </div>
+                <div class="invalid-feedback">
+                    {% trans %}inválido!{% endtrans %}
+                </div>
+            </div>
+            <div class="text-left col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12 mb-3 h-100">
+                <label id="lctcampanas" style="display:none">{% trans %}Campañas{% endtrans %}</label>
+                {{ form_widget(form.ctcampanas,{'id':'ctcampanas','attr':{'class':'form-control form-control-sm w-100','style':'display:none'}}) }}
+            </div>
+        </div>
+        <div class="form-row align-items-center justify-content-center">
+            <div class="text-left col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12 mb-3">
+                <label for="username">{% trans %}Estado{% endtrans %}</label>
+                <div class="form-control custom-control">
+                    <div class="custom-control custom-switch">
+                        {{ form_widget(form.enabled,{'id':'enabled','attr':{'class':'custom-control-input'}}) }}
+                        <label id="labEstado" class="custom-control-label" for="enabled">{% trans %}Usuario Inactivo{% endtrans %}</label>
+                    </div>
+                </div>
+            </div>
+            <div class="text-left col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12 mb-3">
+            </div>
+        </div>
+        <div class="form-row align-items-center justify-content-center">
+            <div class="text-left col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12 mb-3">
+                {{ form_widget(form.password,{'id':'password'}) }}
+                <div class="valid-feedback">
+                    {% trans %}válido{% endtrans %}
+                </div>
+                <div class="invalid-feedback">
+                    {% trans %}inválido!{% endtrans %}
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row align-items-center justify-content-center mt-2">
+            <div class="col-12 smallText text-center">
+                <a href="{{ path('user_index') }}">
+                    <button type="button" class="btn btn-info">
+                        <i class="fas fa-undo-alt"></i> Volver
+                    </button>
+                </a>
+                <button type="submit" class="btn btn-success">
+                    <i class="far fa-save"></i> Guardar
+                </button>
+            </div>
+        </div>
+        {{ form_end(form)}}
+    </div>
+
+    <script>
+        var usuarios = JSON.parse('{{ usuarios|json_encode|raw }}');
+        $(document).ready(function(){
+            $("#enabled").click(function(){
+                if(this.checked == true){
+                   $("#labEstado").addClass('text-primary');
+                   $("#labEstado").empty();
+                   $("#labEstado").append('{% trans %}Usuario Activo{% endtrans %}');
+                }else{
+                    $("#labEstado").removeClass('text-primary');
+                    $("#labEstado").empty();
+                    $("#labEstado").append('{% trans %}Usuario Inactivo{% endtrans %}');
+                }
+            });
+            $("#SUPERVISOR").click(function(){
+                if(this.checked == true){
+                   $("#ctcampanas").show();
+                   $("#lctcampanas").show();
+                   $("#ctcampanas").attr('required','required')
+                }else{
+                    $("#ctcampanas").hide();
+                    $("#lctcampanas").hide();
+                    $("#ctcampanas").removeAttr('required','required')
+                }
+            });
+            $("#VENTAS").click(function(){
+                if(this.checked == true){
+                    $("#ctcampanas").show();
+                    $("#lctcampanas").show();
+                    $("#ctcampanas").attr('required','required')
+                }else{
+                    $("#ctcampanas").hide();
+                    $("#lctcampanas").hide();
+                    $("#ctcampanas").removeAttr('required','required')
+                }
+            });
+            $("input:checkbox").click(function(){
+                if(this.checked == true){
+                    $("#l"+$(this).val()).addClass('text-primary');
+                }else{
+                    $("#l"+$(this).val()).removeClass('text-primary');
+                }
+            });
+        });
+        // VALIDACION
+        (function() {
+            'use strict';
+            window.addEventListener('load', function() {
+                var forms = document.getElementsByClassName('needs-validation');
+                var validation = Array.prototype.filter.call(forms, function(form) {
+                    form.addEventListener('submit', function(event) {
+                        if (form.checkValidity() === false) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }else{
+                            usuarios.forEach(function(element) {
+                                if(element.username == $("#username").val()){
+                                    $("#username").val('');
+                                    $("#lusername").empty();
+                                    $("#lusername").append("{% trans %}Nombre de usuario ya registrado!{% endtrans %}");
+                                    $("#username").focus();
+                                    event.preventDefault();
+                                    event.stopPropagation();
+                                }
+                                if(element.email == $("#email").val()){
+                                    $("#email").val('');
+                                    $("#lemail").empty();
+                                    $("#lemail").append("{% trans %}Correo de usuario ya registrado!{% endtrans %}");
+                                    $("#email").focus();
+                                    event.preventDefault();
+                                    event.stopPropagation();
+                                }
+                            });
+
+                        }
+                        form.classList.add('was-validated');
+                    }, false);
+                });
+            }, false);
+        })();
+    </script>
+{% endblock %}

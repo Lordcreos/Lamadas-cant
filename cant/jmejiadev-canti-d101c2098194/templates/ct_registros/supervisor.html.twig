@@ -1,0 +1,157 @@
+{% extends 'base.html.twig' %}
+
+{% block contenido %}
+<div id="app">
+    <div class="container w-100 mt-5">
+        <div class="row">
+            <div class="col-12">
+                <h2>{% trans %}Sistema de Registros - Distribución{% endtrans %}</h2><hr>
+            </div>
+        </div>
+        <div class="row">
+            <div id="grid"></div>
+        </div>
+    </div>
+
+    <div class="row align-items-center justify-content-center mt-2">
+        <div class="col-12 smallText text-center">
+            <!--<button id="distribuir" type="button" class="btn btn-info">
+                <i class="fas fa-plus mr-3"></i>{% trans %}Distribuir{% endtrans %}
+            </button>-->
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                Asignar
+            </button>
+        </div>
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th scope="col">N°</th>
+                                    <th scope="col">ventas1</th>
+                                    <th scope="col">email</th>
+                                    <th scope="col">campaña</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="(tr,index) in datos" :key="index">
+                                    <td><input type="radio" :id="index" :value="tr" v-model="escoge"></td>
+                                    <td v-text="tr.id"></td>
+                                    <td v-text="tr.username"></td>
+                                    <td v-text="tr.email"></td>
+                                    <td v-text="tr.ctcampanas_id"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" @click="asignado()">Asignar</button>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <script>
+        var registros = {{ ct_registros|json_encode|raw }};
+        var asesores = {{ ct_asesores|json_encode|raw }};
+        $(document).ready(function(){
+            var source =
+                {
+                    localdata: registros,
+                    datatype: "array",
+                    datafields:
+                        [
+                            { name: 'id', type: 'int' },
+                            { name: 'username', type: 'string' },
+                            { name: 'camNombre', type: 'string' },
+                            { name: 'regDocumento', type: 'string' },
+                            { name: 'regTelefono', type: 'string' },
+                            { name: 'regNombre', type: 'string' },
+                            { name: 'regProducto', type: 'string' },
+                            { name: 'tipLlaNombre', type: 'string' },
+                            { name: 'regFecRegistro', map:'regFecRegistro>date', type: 'date' }
+
+                        ]
+                };
+            var dataAdapter = new $.jqx.dataAdapter(source);
+
+            $("#grid").jqxGrid(
+                {
+                    width: '100%',
+                    source: dataAdapter,
+                    columnsresize: true,
+                    showfilterrow: true,
+                    filterable: true,
+                    selectionmode: 'checkbox',
+                    altrows: true,
+                    columns: [
+                        { text: 'Id', datafield: 'id', width: 40 },
+                        { text: 'Usuario Ntg', datafield: 'username', width: 100 },
+                        { text: 'Campaña', datafield: 'camNombre', width: 120 },
+                        { text: 'Documento', datafield: 'regDocumento', width: 120 },
+                        { text: 'Teléfono', datafield: 'regTelefono', width: 100 },
+                        { text: 'Nombre', datafield: 'regNombre', width: 200 },
+                        { text: 'Producto', datafield: 'regProducto', width: 200 },
+                        { text: 'Tipo Llamada', datafield: 'tipLlaNombre', width: 120 },
+                        { text: 'Fecha Registro', datafield: 'regFecRegistro', width: 100, cellsformat:'yyyy-MM-dd' },
+
+                    ]
+                });
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        const app = new Vue({
+            el: '#app',
+            data: {
+                datos:{{ ct_asesores|json_encode|raw }},
+                escoge:[],
+                registros:[]
+            },
+            methods: {
+                asignado(){
+                    var rows = [];
+                    rows = $("#grid").jqxGrid('getselectedrowindexes');
+                    if(rows.length == 0){
+                        alert("Debe seleccionar registros");
+                        return false;   
+                    }
+                    if(this.escoge.length<=0){
+                        alert("Debe seleccionar Asesor");
+                        return false;   
+                    }
+                    var registros = [];
+                    for(var i=0; i< rows.length; i++){
+                        var selectedRowData = $('#grid').jqxGrid('getrowdata', rows[i]);
+                        registros.push(selectedRowData.id);
+                    }
+                    var asesor = this.escoge.id;
+                    $.ajax({
+                        type: 'POST',
+                        url: '{{ path('ct_registros_distribuir') }}',
+                        data: {'registros':registros, 'asesor':asesor},
+                        cache: false,
+                        success: function (data) {
+                            alert('Distribución Realizada - '+ data);
+                            location.reload();
+                        },
+                        error: function (data) {
+                            alert('Error, Distribución no realizada: - '+ data.responseText);
+                        },
+                    });
+                }
+            }
+        })
+    </script>
+{% endblock %}

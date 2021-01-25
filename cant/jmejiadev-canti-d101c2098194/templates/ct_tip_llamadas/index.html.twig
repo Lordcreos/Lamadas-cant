@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block contenido %}
+    <div class="container w-100 mt-5">
+        <div class="row">
+            <div class="col-12">
+                <h2>{% trans %}Listado de Tipos de Llamadas{% endtrans %}</h2><hr>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-4 text-left">
+                <div class="input-group input-group-sm m-2">
+                    <input id="buscar" type="text" class="form-control rounded" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" placeholder="{% trans %}buscar . . .{% endtrans %}">
+                </div>
+            </div>
+            <div class="col-8 smallText text-right">
+                <a href="{{ path('ct_tip_llamadas_new') }}">
+                    <button type="button" class="btn btn-info">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </a>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table id="lista" class="table border">
+                <thead>
+                <tr class="bg-success text-white font-weight-bold">
+                    <th><h6>Id</h6></th>
+                    <th class="text-left"><h6>{% trans %}Nombre{% endtrans %}</h6></th>
+                    <th><h6>{% trans %}Estado{% endtrans %}</h6></th>
+                    <th><h6>{% trans %}Opciones{% endtrans %}</h6></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for index,llamada in ct_tip_llamadas %}
+                    <tr class="fila w-100">
+                        <td class="">{{ llamada.id }}</td>
+                        <td class="text-left"><h6>{{ llamada.tipLlaNombre }}</h6></td>
+                        <td class=""><h6>{% if llamada.tipLlaEstado == 1 %}Activo{% else %}Inactivo{% endif %}</h6></td>
+                        <td class=""><a href="{{ path('ct_tip_llamadas_edit',{'id':llamada.id}) }}"><button type="button" class="btn btn-primary btn-sm"><i class="far fa-edit"></i></i>Modificar</button></a></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="row align-items-center justify-content-center mt-2">
+        <div class="col-12 smallText text-center">
+            <a href="{{ path('ct_tip_llamadas_new') }}">
+                <button type="button" class="btn btn-info">
+                    <i class="fas fa-plus mr-3"></i>{% trans %}Crear Tipo de Llamada{% endtrans %}
+                </button>
+            </a>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function(){
+            $("#buscar").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("#lista .fila").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+
+        });
+    </script>
+{% endblock %}

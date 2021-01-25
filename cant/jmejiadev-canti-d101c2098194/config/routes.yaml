@@ -1,0 +1,9 @@
+fos_user:
+  resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+  prefix:
+    es: /
+    en: /en
+
+    #fos_user_profile: # resource: "@FOSUserBundle/Resources/config/routing/profile.xml"
+
+

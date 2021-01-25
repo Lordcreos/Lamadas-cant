@@ -1,0 +1,102 @@
+{% extends 'base.html.twig' %}
+
+{% block contenido %}
+    <div class="container w-100 mt-5">
+        <div class="row">
+            <div class="col-12">
+                <h2>{% trans %}Sistema de Registros - Ventas{% endtrans %}</h2><hr>
+            </div>
+        </div>
+        <div class="row">
+            <div id="grid"></div>
+        </div>
+    </div>
+    <script>
+        var registros = {{ ct_registros|json_encode|raw }};
+
+        $(document).ready(function(){
+            var source =
+                {
+                    localdata: registros,
+                    datatype: "array",
+                    datafields:
+                        [
+                            { name: 'id', type: 'int' },
+                            { name: 'username', type: 'string' },
+                            { name: 'camNombre', type: 'string' },
+                            { name: 'regDocumento', type: 'string' },
+                            { name: 'regTelefono', type: 'string' },
+                            { name: 'regNombre', type: 'string' },
+                            { name: 'regProducto', type: 'string' },
+                            { name: 'tipLlaNombre', type: 'string' },
+                            { name: 'regFecRegistro', map:'regFecRegistro>date', type: 'date' }
+
+                        ]
+                };
+            var dataAdapter = new $.jqx.dataAdapter(source);
+            var renderer = function (index, datafield, value, defaultvalue, column, rowdata) {
+                var cadena = '<div class="container-fluid">';
+                cadena += '<div class="row">' +
+                    '<a href="{{ path("ct_registros_edit",{'id':'idReg'}) }}"><div class="col-3"><button type="button" class="btn btn-success btn-sm mt-1"><i class="far fa-edit"></i></button></div>' +
+                    '<div class="col-3"></div>' +
+                    '</div>';
+                cadena += '';
+                cadena += '</div>';
+                cadena = cadena.replace('idReg',rowdata.id);
+                return cadena;
+            }
+            $("#grid").jqxGrid(
+                {
+                    width: '100%',
+                    source: dataAdapter,
+                    columnsresize: true,
+                    rowsheight: 40,
+                    showfilterrow: true,
+                    filterable: true,
+                    altrows: true,
+                    columns: [
+                        { text: 'ID', datafield: 'id', width: 35 },
+                        { text: 'Usuario Ntg', datafield: 'username', width: 80 },
+                        { text: 'Campaña', datafield: 'camNombre', width: 120 },
+                        { text: 'Documento', datafield: 'regDocumento', width: 120 },
+                        { text: 'Teléfono', datafield: 'regTelefono', width: 100 },
+                        { text: 'Nombre', datafield: 'regNombre', width: 200 },
+                        { text: 'Producto', datafield: 'regProducto', width: 200 },
+                        { text: 'Tipo Llamada', datafield: 'tipLlaNombre', width: 100 },
+                        { text: 'Fecha Registro', datafield: 'regFecRegistro', width: 80, cellsformat:'yyyy-MM-dd' },
+                        { text: 'Opciones', datafield: 'A', width: 100, cellsrenderer: renderer },
+
+                    ]
+                });
+
+            $("#distribuir").click(function(){
+                var rows = [];
+                    rows = $("#grid").jqxGrid('getselectedrowindexes');
+                if(rows.length == 0){
+                    alert("Debe seleccionar registros");
+                    return false;
+                }
+                var registros = [];
+                for(var i=0; i< rows.length; i++){
+                    var selectedRowData = $('#grid').jqxGrid('getrowdata', rows[i]);
+                    registros.push(selectedRowData.id);
+                }
+
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ path('ct_registros_distribuir') }}',
+                    data: {'registros':registros},
+                    cache: false,
+                    success: function (data) {
+                        alert('Distribución Realizada con exito - '+ data);
+                        location.reload();
+                    },
+                    error: function (data) {
+                        alert('Error, Distribución no realizada: - '+ data.responseText);
+                    },
+                });
+            });
+
+        });
+    </script>
+{% endblock %}

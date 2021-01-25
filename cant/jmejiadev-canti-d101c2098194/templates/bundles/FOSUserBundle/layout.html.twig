@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+{% block styles %}
+    <link rel="stylesheet" type="text/css" href="{{asset('css/login.css')}}">
+{% endblock %}
+{% block contenido %}
+    <div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="false" data-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered mt-1" role="document">
+            <div class="modal-content" >
+                <div class="modal-header" id="conLogin" >
+                    <div class="alert alert-danger w-100" role="alert">
+                    </div>
+                </div>
+                <div class="modal-body">
+                    {% block login %}
+                        {% block fos_user_content %}{% endblock %}
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

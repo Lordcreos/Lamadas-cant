@@ -1,0 +1,90 @@
+<div class="jquery-accordion-menu-label bg-dark"><br></div>
+<!--<div class="jquery-accordion-menu-header bg-dark">Opciones</div>-->
+<ul>
+<!--ADMINISTRADOR-->
+    {% if app.user.roles[0] == "ADMINISTRADOR" %}
+        <div class="jquery-accordion-menu-header bg-dark">Configuraciones</div>
+        <li class=""> <a href="#" class=""> <i class="fas fa-user-alt"></i>{% trans %}Usuarios{% endtrans %}<span class="submenu-indicator">+</span></a>
+            <ul class="submenu" style="display: none;">
+                <li><a href="{{ path('user_new') }}"><i class="fas fa-user-plus"></i>{% trans %}Crear Usuario{% endtrans %}</a></li>
+                <li><a href="{{ path('user_index') }}"><i class="fas fa-user-edit"></i>{% trans %}Modificar Usuarios{% endtrans %}</a></li>
+            </ul>
+        </li>
+        <li class=""> <a href="#" class=""><i class="fas fa-window-restore"></i>{% trans %}Campañas{% endtrans %}<span class="submenu-indicator">+</span></a>
+            <ul class="submenu" style="display: none;">
+                <li><a href="{{ path('ct_campanas_new') }}"><i class="fas fa-plus"></i>{% trans %}Crear Campaña{% endtrans %}</a></li>
+                <li><a href="{{ path('ct_campanas_index') }}"><i class="far fa-edit"></i>{% trans %}Modificar Campañas{% endtrans %}</a></li>
+            </ul>
+        </li>
+        <li class=""> <a href="#" class=""><i class="fas fa-window-restore"></i>{% trans %}Tipos de LLamadas{% endtrans %}<span class="submenu-indicator">+</span></a>
+            <ul class="submenu" style="display: none;">
+                <li><a href="{{ path('ct_tip_llamadas_new') }}"><i class="fas fa-plus"></i>{% trans %}Crear Tipo{% endtrans %}</a></li>
+                <li><a href="{{ path('ct_tip_llamadas_index') }}"><i class="far fa-edit"></i>{% trans %}Modificar Tipo{% endtrans %}</a></li>
+            </ul>
+        </li>
+        <!--GESTION-->
+        <div class="jquery-accordion-menu-header bg-dark">Gestión</div>
+        <li class=""> <a href="#" class=""><i class="far fa-clock"></i>{% trans %}Distribuir{% endtrans %}<span class="submenu-indicator">+</span></a>
+            <ul class="submenu" style="display: none;">
+
+            </ul>
+        </li>
+        <div class="jquery-accordion-menu-header bg-dark">Reporteria</div>
+        <li class=""> <a href="#" class=""><i class="far fa-clock"></i>{% trans %}Sistema de Registro{% endtrans %}<span class="submenu-indicator">+</span></a>
+            <ul class="submenu" style="display: block;">
+                <li><a href="{{ path('ct_registros_reporteria_gestion') }}"><i class="far fa-file-excel"></i>{% trans %}Gestión{% endtrans %}</a></li>
+                <li><a href="{{ path('ct_registros_reporteria_ventas') }}"><i class="far fa-file-excel"></i>{% trans %}Ventas{% endtrans %}</a></li>
+            </ul>
+        </li>
+    {% endif %}
+<!--AGENTE-->
+    {% if app.user.roles[0] == "AGENTE" %}
+    <!--GESTION-->
+    <div class="jquery-accordion-menu-header bg-dark">AGENTE</div>
+    <li class=""> <a href="#" class=""><i class="far fa-clock"></i>{% trans %}Sistema de Registro{% endtrans %}<span class="submenu-indicator">+</span></a>
+        <ul class="submenu" style="display: block;">
+            <li><a href="{{ path('ct_registros_index') }}"><i class="fab fa-ubuntu"></i>{% trans %}Ingresos{% endtrans %}</a></li>
+            <li><a href="{{ path('ct_registros_reporteria_agente') }}"><i class="far fa-file-excel"></i>{% trans %}Reporteria{% endtrans %}</a></li>
+        </ul>
+    </li>
+    {% endif %}
+<!--SUPERVISOR-->
+    {% if app.user.roles[0] == "SUPERVISOR" %}
+    <!--GESTION-->
+    <div class="jquery-accordion-menu-header bg-dark">SUPERVISOR</div>
+    <li class=""> <a href="#" class=""><i class="far fa-clock"></i>{% trans %}Sistema de Registro{% endtrans %}<span class="submenu-indicator">+</span></a>
+        <ul class="submenu" style="display: block;">
+            <li><a href="{{ path('ct_registros_supervisor') }}"><i class="fab fa-ubuntu"></i>{% trans %}Distribuir{% endtrans %}</a></li>
+        </ul>
+    </li>
+    {% endif %}
+<!--VENTAS-->
+    {% if app.user.roles[0] == "VENTAS" %}
+        <!--GESTION-->
+        <div class="jquery-accordion-menu-header bg-dark">VENTAS</div>
+        <li class=""> <a href="#" class=""><i class="far fa-clock"></i>{% trans %}Sistema de Registros{% endtrans %}<span class="submenu-indicator">+</span></a>
+            <ul class="submenu" style="display: block;">
+                <li><a href="{{ path('ct_registros_index') }}"><i class="fab fa-ubuntu"></i>{% trans %}Gestión{% endtrans %}</a></li>
+            </ul>
+        </li>
+        <div class="jquery-accordion-menu-header bg-dark">Reporteria</div>
+        <li class=""> <a href="#" class=""><i class="far fa-clock"></i>{% trans %}Sistema de Registro{% endtrans %}<span class="submenu-indicator">+</span></a>
+            <ul class="submenu" style="display: block;">
+                <li><a href="{{ path('ct_registros_reporteria_ventas_agente') }}"><i class="far fa-file-excel"></i>{% trans %}Ventas{% endtrans %}</a></li>
+            </ul>
+        </li>
+    {% endif %}
+<!--REPORTERIA-->
+    {% if app.user.roles[0] == "REPORTERIA" %}
+        <!--GESTION-->
+        <div class="jquery-accordion-menu-header bg-dark">Reporteria</div>
+        <li class=""> <a href="#" class=""><i class="far fa-clock"></i>{% trans %}Sistema de Registro{% endtrans %}<span class="submenu-indicator">+</span></a>
+            <ul class="submenu" style="display: block;">
+                <li><a href="{{ path('ct_registros_reporteria_gestion') }}"><i class="far fa-file-excel"></i>{% trans %}Gestión{% endtrans %}</a></li>
+                <li><a href="{{ path('ct_registros_reporteria_ventas') }}"><i class="far fa-file-excel"></i>{% trans %}Ventas{% endtrans %}</a></li>
+            </ul>
+        </li>
+    {% endif %}
+</ul>
+<div class="jquery-accordion-menu-label bg-dark"><br></div>
+<div class="jquery-accordion-menu-footer bg-dark"><a href="{{ path('fos_user_security_logout') }}"  ><i class="fas fa-sign-out-alt btn-md ml-3 mr-2"></i><span class="text-white">{% trans %}Salir{% endtrans %}</span></a></div>

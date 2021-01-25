@@ -1,0 +1,85 @@
+{% extends 'base.html.twig' %}
+
+{% block contenido %}
+    <div class="container w-100 mt-5">
+        <div class="row">
+            <div class="col-12">
+                <h2>{% trans %}Sistema de Registros{% endtrans %}</h2><hr>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-4 text-left">
+                <div class="input-group input-group-sm m-2">
+                    <input id="buscar" type="text" class="form-control rounded" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" placeholder="{% trans %}buscar . . .{% endtrans %}">
+                </div>
+            </div>
+            {% if app.user.roles[0] == 'AGENTE' %}
+            <div class="col-8 smallText text-right">
+                <a href="{{ path('ct_registros_new') }}">
+                    <button type="button" class="btn btn-info">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </a>
+            </div>
+            {% endif %}
+        </div>
+        <div class="table-responsive">
+            <table id="lista" class="table border">
+                <thead>
+                <tr class="bg-success text-white font-weight-bold">
+                    <th><h6>Id</h6></th>
+                    <th class="text-left"><h6>{% trans %}Usuario Ntg{% endtrans %}</h6></th>
+                    <th><h6>{% trans %}Campaña{% endtrans %}</h6></th>
+                    <th><h6>{% trans %}Documento{% endtrans %}</h6></th>
+                    <th><h6>{% trans %}Teléfono{% endtrans %}</h6></th>
+                    <th><h6>{% trans %}Nombre Cliente{% endtrans %}</h6></th>
+                    <th><h6>{% trans %}Producto{% endtrans %}</h6></th>
+                    <th><h6>{% trans %}Tipo Llamada{% endtrans %}</h6></th>
+                    <th><h6>{% trans %}Fecha{% endtrans %}</h6></th>
+                    <th><h6>{% trans %}Estado{% endtrans %}</h6></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for index,registro in ct_registros %}
+                    <tr class="fila w-100">
+                        <td class="">{{ registro.id }}</td>
+                        <td class="">{{ registro.username }}</td>
+                        <td class="text-left"><h6>{{ registro.camNombre }}</h6></td>
+                        <td class="text-left"><h6>{{ registro.regDocumento }}</h6></td>
+                        <td class="text-left"><h6>{{ registro.regTelefono }}</h6></td>
+                        <td class="text-left"><h6>{{ registro.regNombre }}</h6></td>
+                        <td class="text-left"><h6>{{ registro.regProducto }}</h6></td>
+                        <td class="text-left"><h6>{{ registro.tipLlaNombre }}</h6></td>
+                        <td class="text-left"><h6>{{ registro.regFecRegistro|date }}</h6></td>
+                        <td class=""><h6>{{ registro.regEstado  }}</h6></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% if app.user.roles[0] == 'AGENTE' %}
+    <div class="row align-items-center justify-content-center mt-2 mb-5">
+        <div class="col-12 smallText text-center">
+            <a href="{{ path('ct_registros_new') }}">
+                <button type="button" class="btn btn-info">
+                    <i class="fas fa-plus mr-3"></i>{% trans %}Crear Registro{% endtrans %}
+                </button>
+            </a>
+        </div>
+    </div>
+    {% endif %}
+    <script>
+        var registros = {{ ct_registros|json_encode|raw }};
+        console.log(registros);
+        $(document).ready(function(){
+            $("#buscar").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("#lista .fila").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+
+        });
+    </script>
+{% endblock %}

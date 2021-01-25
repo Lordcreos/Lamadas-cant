@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}CtTipLlamadas{% endblock %}
+
+{% block body %}
+    <h1>CtTipLlamadas</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ ct_tip_llamada.id }}</td>
+            </tr>
+            <tr>
+                <th>TipLlaNombre</th>
+                <td>{{ ct_tip_llamada.tipLlaNombre }}</td>
+            </tr>
+            <tr>
+                <th>TipLlaEstado</th>
+                <td>{{ ct_tip_llamada.tipLlaEstado ? 'Yes' : 'No' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('ct_tip_llamadas_index') }}">back to list</a>
+
+    <a href="{{ path('ct_tip_llamadas_edit', {'id': ct_tip_llamada.id}) }}">edit</a>
+
+    {{ include('ct_tip_llamadas/_delete_form.html.twig') }}
+{% endblock %}

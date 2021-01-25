@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}BtParGlobales{% endblock %}
+
+{% block body %}
+    <h1>BtParGlobales</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ bt_par_globale.id }}</td>
+            </tr>
+            <tr>
+                <th>ParCodigo</th>
+                <td>{{ bt_par_globale.parCodigo }}</td>
+            </tr>
+            <tr>
+                <th>ParValor</th>
+                <td>{{ bt_par_globale.parValor }}</td>
+            </tr>
+            <tr>
+                <th>ParEstado</th>
+                <td>{{ bt_par_globale.parEstado ? 'Yes' : 'No' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('bt_par_globales_index') }}">back to list</a>
+
+    <a href="{{ path('bt_par_globales_edit', {'id': bt_par_globale.id}) }}">edit</a>
+
+    {{ include('bt_par_globales/_delete_form.html.twig') }}
+{% endblock %}

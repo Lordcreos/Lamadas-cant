@@ -1,0 +1,118 @@
+{% extends 'base.html.twig' %}
+
+{% block contenido %}
+    <div class="container w-100 mt-5">
+        <div class="row">
+            <div class="col-12">
+                <h2>{% trans %}Modificar Parámetro{% endtrans %}</h2><hr>
+            </div>
+        </div>
+        {{ form_start(form, {'attr': {'id': 'forNew','class':"was-validated"}}) }}
+        <div class="form-row align-items-center justify-content-center">
+            <div class="text-left col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12 mb-3">
+                <label for="parCodigo">{% trans %}Código{% endtrans %}</label>
+                {{ form_widget(form.parCodigo,{'id':'parCodigo','attr':{'class':'form-control form-control-sm'}}) }}
+                <div class="valid-feedback">
+                    {% trans %}válido{% endtrans %}
+                </div>
+                <div id="lparCodigo" class="invalid-feedback">
+                    {% trans %}inválido!{% endtrans %}
+                </div>
+            </div>
+        </div>
+        <div class="form-row align-items-center justify-content-center">
+            <div class="text-left col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12 mb-3">
+                <label for="parValor">{% trans %}Valor{% endtrans %}</label>
+                {{ form_widget(form.parValor,{'id':'parValor','attr':{'class':'form-control form-control-sm'}}) }}
+                <div class="valid-feedback">
+                    {% trans %}válido{% endtrans %}
+                </div>
+                <div id="lparValor" class="invalid-feedback">
+                    {% trans %}inválido!{% endtrans %}
+                </div>
+            </div>
+        </div>
+        <div class="form-row align-items-center justify-content-center">
+            <div class="text-left col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12 mb-3">
+                <label>{% trans %}Estado{% endtrans %}</label>
+                <div class="form-control custom-control">
+                    <div class="custom-control custom-switch">
+                        {{ form_widget(form.parEstado,{'id':'parEstado','attr':{'class':'custom-control-input','checked':'checked'}}) }}
+                        <label id="labEstado" class="custom-control-label" for="parEstado">{% trans %}ACTIVO{% endtrans %}</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row align-items-center justify-content-center mt-2">
+            <div class="col-12 smallText text-center">
+                <a href="{{ path('bt_par_globales_index') }}">
+                    <button type="button" class="btn btn-info">
+                        <i class="fas fa-undo-alt"></i> Volver
+                    </button>
+                </a>
+                <button type="submit" class="btn btn-success">
+                    <i class="far fa-save"></i> Guardar
+                </button>
+            </div>
+        </div>
+        {{ form_end(form)}}
+    </div>
+
+    <script>
+        var parGlobales = JSON.parse('{{ parGlobales|json_encode|raw }}');
+        console.log(parGlobales);
+        $(document).ready(function(){
+
+            $("#parEstado").click(function(){
+                if(this.checked == true){
+                    $("#labEstado").addClass('text-primary');
+                    $("#labEstado").empty();
+                    $("#labEstado").append('{% trans %}Activo{% endtrans %}');
+                    //$(this).val('Activo');
+                }else{
+                    $("#labEstado").removeClass('text-primary');
+                    $("#labEstado").empty();
+                    $("#labEstado").append('{% trans %}Inactivo{% endtrans %}');
+                    //$(this).val('Inactivo');
+                }
+            });
+            $("input:checkbox").click(function(){
+                if(this.checked == true){
+                    $("#l"+$(this).val()).addClass('text-primary');
+                }else{
+                    $("#l"+$(this).val()).removeClass('text-primary');
+                }
+            });
+        });
+        // VALIDACION
+        (function() {
+            'use strict';
+            window.addEventListener('load', function() {
+                var forms = document.getElementsByClassName('was-validated');
+
+                var validation = Array.prototype.filter.call(forms, function(form) {
+
+                    form.addEventListener('submit', function(event) {
+                        if (form.checkValidity() === false) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        } else {
+                            parGlobales.forEach(function (element) {
+                                if (element.par_codigo.toUpperCase() == $("#parCodigo").val().toUpperCase()) {
+                                    $("#parCodigo").val('');
+                                    $("#lparCodigo").empty();
+                                    $("#lparCodigo").append("{% trans %}Código para el parámetro ya registrado!{% endtrans %}");
+                                    $("#parCodigo").focus();
+                                    event.preventDefault();
+                                    event.stopPropagation();
+                                }
+                            });
+                        }
+                        form.classList.add('was-validated');
+                    }, false);
+                });
+            }, false);
+        })();
+    </script>
+{% endblock %}
